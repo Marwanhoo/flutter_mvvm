@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mvvm/view/home_view.dart';
-import 'package:flutter_mvvm/view/posts_view.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_mvvm/cubit/post_cubit.dart';
+import 'package:flutter_mvvm/repository/post_repository.dart';
+import 'package:flutter_mvvm/services/api_service.dart';
+import 'package:flutter_mvvm/view/post_view.dart';
+
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -12,11 +16,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        useMaterial3: true,
+      title: 'MVVM with Cubit',
+      home: BlocProvider(
+        create: (_) => PostCubit(PostRepository(ApiService())),
+        child: PostView(),
       ),
-      home: PostsView(),
     );
   }
 }
